@@ -7,6 +7,16 @@ Compare results (rock>scissors>paper>rock)
 Output the result
 */
 
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        console.log(event.path[0].className);
+        getPlayerChoice(event.path[0].className);
+    })
+});
+
+
+
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
     let isInputValid = validatePlayerInput(playerSelection);
@@ -48,8 +58,7 @@ function getComputerChoice() {
     return choice;
 }
 
-function getPlayerChoice() {
-    let choice = prompt("Choose your weapon! Rock/Paper/Scissors");
+function getPlayerChoice(choice) {
     console.log(`'Player chose ${choice}'`);
     return choice;
 }
