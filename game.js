@@ -7,10 +7,13 @@ Compare results (rock>scissors>paper>rock)
 Output the result
 */
 
+let computerScore = 0;
+let playerScore = 0;
+
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
-        playRound(getPlayerChoice(event.path[0].className), getComputerChoice());
+        game(getPlayerChoice(event.path[0].className));
     })
 });
 
@@ -23,25 +26,27 @@ function appendToDom(elementType, textToDisplay) {
 
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
-
+    let roundWinner = '';
     if (playerSelection === computerSelection) {
         appendToDom('div', 'Draw! Both chose: ' + computerSelection);
+        roundWinner = 'none';
     } else {
         let winner = calculateWinner(playerSelection, computerSelection);
         let winningOption = (winner === 'player') ? playerSelection : computerSelection;
         let losingOption = (winner === 'player') ? computerSelection : playerSelection;
         appendToDom('div', winner + ' wins! ' + winningOption + ' beats ' + losingOption);
+        roundWinner = winner;
     }
     appendToDom('br');
-
+    return roundWinner;
 }
 
 function calculateWinner(playerSelection, computerSelection) {
     if ((playerSelection === 'paper' && computerSelection === 'rock') ||
         (playerSelection === 'scissors' && computerSelection === 'paper') ||
         (playerSelection === 'rock' && computerSelection === 'scissors')) {
-        return 'player';
-    } else return 'computer';
+        return 'Player';
+    } else return 'Computer';
 }
 
 function getComputerChoice() {
@@ -61,7 +66,12 @@ function getPlayerChoice(choice) {
     return choice;
 }
 
-function game() {
-    playRound(getPlayerChoice(), getComputerChoice());
+function game(playerChoice) {
+    let winner = playRound(playerChoice, getComputerChoice());
+    if (winner.toLowerCase() === 'player') { playerScore++; }
+    else if (winner.toLowerCase() === 'computer') { computerScore++; }
+    appendToDom('div', `Current score:`);
+    appendToDom('div', `Player: ${playerScore}, Computer: ${computerScore}`);
+    appendToDom('br');
 }
 
