@@ -55,9 +55,6 @@ function getPlayerChoice() {
 }
 
 function game() {
-    for (let i = 0; i < 5; i++) {
-        console.log('Round ' + +(i + 1));
-        playRound(getPlayerChoice(), getComputerChoice());
-    }
+    playRound(getPlayerChoice(), getComputerChoice());
 }
 
