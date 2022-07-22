@@ -10,8 +10,7 @@ Output the result
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
     button.addEventListener('click', (event) => {
-        console.log(event.path[0].className);
-        getPlayerChoice(event.path[0].className);
+        playRound(getPlayerChoice(event.path[0].className), getComputerChoice());
     })
 });
 
@@ -59,7 +58,7 @@ function getComputerChoice() {
 }
 
 function getPlayerChoice(choice) {
-    console.log(`'Player chose ${choice}'`);
+    console.log(`Player chose ${choice}`);
     return choice;
 }
 
