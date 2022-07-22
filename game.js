@@ -14,27 +14,26 @@ buttons.forEach(button => {
     })
 });
 
-
+function appendToDom(elementType, textToDisplay) {
+    const resultDiv = document.querySelector('.result');
+    const element = document.createElement(elementType);
+    element.textContent = textToDisplay;
+    resultDiv.appendChild(element);
+}
 
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
-    let isInputValid = validatePlayerInput(playerSelection);
-    if (isInputValid) {
-        if (playerSelection === computerSelection) {
-            console.log('Draw! Both chose: ' + computerSelection);
-        } else {
-            let winner = calculateWinner(playerSelection, computerSelection);
-            let winningOption = (winner === 'player') ? playerSelection : computerSelection;
-            let losingOption = (winner === 'player') ? computerSelection : playerSelection;
-            console.log(winner + ' wins! ' + winningOption + ' beats ' + losingOption);
-        }
-    } else {
-        console.log('Player chose unknown option. Quitting :(');
-    }
-}
 
-function validatePlayerInput(input) {
-    return input === 'rock' || input === 'paper' || input === 'scissors';
+    if (playerSelection === computerSelection) {
+        appendToDom('div', 'Draw! Both chose: ' + computerSelection);
+    } else {
+        let winner = calculateWinner(playerSelection, computerSelection);
+        let winningOption = (winner === 'player') ? playerSelection : computerSelection;
+        let losingOption = (winner === 'player') ? computerSelection : playerSelection;
+        appendToDom('div', winner + ' wins! ' + winningOption + ' beats ' + losingOption);
+    }
+    appendToDom('br');
+
 }
 
 function calculateWinner(playerSelection, computerSelection) {
@@ -53,12 +52,12 @@ function getComputerChoice() {
     } else if (randomChoice === 1) {
         choice = 'paper';
     } else choice = 'scissors';
-    console.log(`'Computer chose ${choice}'`);
+    appendToDom('div', `Computer chose ${choice}`);
     return choice;
 }
 
 function getPlayerChoice(choice) {
-    console.log(`Player chose ${choice}`);
+    appendToDom('div', `Player chose ${choice}`);
     return choice;
 }
 
