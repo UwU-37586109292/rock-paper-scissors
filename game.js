@@ -12,11 +12,16 @@ let playerScore = 0;
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => {
-    button.addEventListener('click', (event) => {
-        game(getPlayerChoice(event.path[0].className));
-    })
+    button.addEventListener('click', game);
 });
 
+function stopGame() {
+    appendToDom('h1', 'We have a winner!');
+    appendToDom('h2', (playerScore === 3 ? 'Player' : 'Computer') + ' won!');
+    buttons.forEach(button => {
+        button.removeEventListener('click', game);
+    })
+}
 function appendToDom(elementType, textToDisplay) {
     const resultDiv = document.querySelector('.result');
     const element = document.createElement(elementType);
@@ -67,11 +72,12 @@ function getPlayerChoice(choice) {
 }
 
 function game(playerChoice) {
-    let winner = playRound(playerChoice, getComputerChoice());
+    let winner = playRound(getPlayerChoice(playerChoice.path[0].className), getComputerChoice());
     if (winner.toLowerCase() === 'player') { playerScore++; }
     else if (winner.toLowerCase() === 'computer') { computerScore++; }
     appendToDom('div', `Current score:`);
     appendToDom('div', `Player: ${playerScore}, Computer: ${computerScore}`);
     appendToDom('br');
+    if (playerScore === 5 || computerScore === 5) { stopGame(); }
 }
 
