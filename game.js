@@ -1,27 +1,42 @@
-
-/*
-Algorithm:
-Computer randomly selects one of 3 choices: rock/paper/scissors
-Ask user for input (rock/paper/scissors)
-Compare results (rock>scissors>paper>rock)
-Output the result
-*/
-
 let computerScore = 0;
 let playerScore = 0;
 const POINTS_TO_WIN = 5;
 let finalWinner = '';
+let roundCounter = 0;
 
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('.player-choice button');
 buttons.forEach(button => {
     button.addEventListener('click', playGame);
 });
+const buttonReset = document.querySelector('.player-panel>button');
+buttonReset.addEventListener('click', resetGame);
 
+function resetGame() {
+    computerScore = 0;
+    playerScore = 0;
+    finalWinner = '';
+    roundCounter = 0;
+    document.getElementById('roundCounter').textContent = `Round number: ${roundCounter}`;
+    document.getElementById('computerScore').textContent = `Computer score: ${computerScore}`;
+    document.getElementById('playerScore').textContent = `Player score: ${playerScore}`;
+    document.getElementById('playerChoice').textContent = '';
+    document.getElementById('computerChoice').textContent = '';
+    document.getElementById('roundResult').textContent = '';
+    document.getElementById('winner').textContent = '';
+
+    const buttons = document.querySelectorAll('.player-choice button');
+    buttons.forEach(button => {
+        button.addEventListener('click', playGame);
+    });
+
+}
 
 function playGame(playerChoiceEvent) {
     let winner = playRound(getPlayerChoice(playerChoiceEvent), getComputerChoice());
     saveNewScore(winner);
     displayScore();
+    roundCounter++;
+    document.getElementById('roundCounter').textContent = `Round number: ${roundCounter}`;
     checkWinConditions();
 }
 
@@ -38,14 +53,13 @@ function saveNewScore(winner) {
 }
 
 function displayScore() {
-    appendToDom('div', `Current score:`);
-    appendToDom('div', `Player: ${playerScore}, Computer: ${computerScore}`);
-    appendToDom('br');
+    document.getElementById('playerScore').textContent = `Player score: ${playerScore}`;
+    document.getElementById('computerScore').textContent = `Computer score: ${computerScore}`;
 }
 
+
 function stopGame() {
-    appendToDom('h1', 'We have a winner!');
-    appendToDom('h2', finalWinner + ' won!');
+    document.getElementById('winner').textContent = finalWinner + ' won!';
     buttons.forEach(button => {
         button.removeEventListener('click', playGame);
     })
@@ -53,17 +67,18 @@ function stopGame() {
 
 function playRound(playerSelection, computerSelection) {
     let roundWinner = '';
+
+
     if (playerSelection === computerSelection) {
-        appendToDom('div', 'Draw! Both chose: ' + computerSelection);
+        document.getElementById('roundResult').textContent = 'Draw! Both chose: ' + computerSelection;
         roundWinner = 'none';
     } else {
         let winner = calculateWinner(playerSelection, computerSelection);
         let winningOption = (winner.toLowerCase() === 'player') ? playerSelection : computerSelection;
         let losingOption = (winner.toLowerCase() === 'player') ? computerSelection : playerSelection;
-        appendToDom('div', winner + ' wins! ' + winningOption + ' beats ' + losingOption);
+        document.getElementById('roundResult').textContent = winner + ' wins! ' + winningOption + ' beats ' + losingOption;
         roundWinner = winner;
     }
-    appendToDom('br');
     return roundWinner;
 }
 
@@ -83,18 +98,22 @@ function getComputerChoice() {
     } else if (randomChoice === 1) {
         choice = 'paper';
     } else choice = 'scissors';
-    appendToDom('div', `Computer chose ${choice}`);
+    document.getElementById('computerChoice').textContent = 'Computer chose: ' + choice;
     return choice;
 }
 
 function getPlayerChoice(choiceEvent) {
     let choice = choiceEvent.srcElement.className;
-    appendToDom('div', `Player chose ${choice}`);
+    document.getElementById('playerChoice').textContent = 'Player chose: ' + choice;
     return choice;
 }
 
-function appendToDom(elementType, textToDisplay) {
-    const resultDiv = document.querySelector('.result');
+function appendToDom(elementType, textToDisplay, parentElementClass) {
+    let resultDiv;
+    if (typeof (parentElementClass) == "undefined") { resultDiv = document.querySelector('.result'); }
+    else {
+        resultDiv = document.querySelector(`.${parentElementClass}`);
+    }
     const element = document.createElement(elementType);
     element.textContent = textToDisplay;
     resultDiv.appendChild(element);

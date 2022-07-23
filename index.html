@@ -6,18 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>Pick your weapon:</h1>
-        <div class="player-choice">
-            <button class="rock">Rock</button>
-            <button class="paper">Paper</button>
-            <button class="scissors">Scissors</button>
+        <div class="player-panel">
+            <h1>Pick your weapon:</h1>
+            <div class="player-choice">
+                <button class="rock">Rock 🪨</button>
+                <button class="paper">Paper 📄</button>
+                <button class="scissors">Scissors ✂️</button>
+            </div>
+            <div class="player-results">
+                <div id="playerScore"></div>
+                <div id="computerScore"></div>
+                <div id="roundCounter"></div>
+            </div>
+            <button>Reset the game</button>
         </div>
-        <br>
-        <div class="result"></div>
+
+        <div class="result">
+            <div id="playerChoice"></div>
+            <div id="computerChoice"></div>
+            <div id="roundResult"></div>
+            <h1 id="winner"></h1>
+        </div>
     </div>
 </body>
 <script src="./game.js" defer></script>
