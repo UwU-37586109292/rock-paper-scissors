@@ -88,7 +88,7 @@ function getComputerChoice() {
 }
 
 function getPlayerChoice(choiceEvent) {
-    let choice = choiceEvent.path[0].className;
+    let choice = choiceEvent.srcElement.className;
     appendToDom('div', `Player chose ${choice}`);
     return choice;
 }
