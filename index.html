@@ -7,16 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/noto-emoji" type="text/css" />
 </head>
 
 <body>
+    <div class="header">
+        <h3>Rock/Paper/Scissors game</h3>
+    </div>
     <div class="container">
         <div class="player-panel">
             <h1>Pick your weapon:</h1>
             <div class="player-choice">
-                <button class="rock">Rock 🪨</button>
-                <button class="paper">Paper 📄</button>
-                <button class="scissors">Scissors ✂️</button>
+                <button class="rock">Rock</button>
+                <button class="paper">Paper</button>
+                <button class="scissors">Scissors</button>
             </div>
             <div class="player-results">
                 <div id="playerScore"></div>
@@ -30,8 +34,14 @@
             <div id="playerChoice"></div>
             <div id="computerChoice"></div>
             <div id="roundResult"></div>
-            <h1 id="winner"></h1>
+            <div class="winner-found">
+                <h1 id="winner"></h1>
+                <img id="celebrate"></img>
+            </div>
         </div>
+    </div>
+    <div class="footer">
+        Made by Zuzka, 2022
     </div>
 </body>
 <script src="./game.js" defer></script>

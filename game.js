@@ -23,6 +23,7 @@ function resetGame() {
     document.getElementById('computerChoice').textContent = '';
     document.getElementById('roundResult').textContent = '';
     document.getElementById('winner').textContent = '';
+    document.getElementById('celebrate').setAttribute("src", "");
 
     const buttons = document.querySelectorAll('.player-choice button');
     buttons.forEach(button => {
@@ -60,6 +61,7 @@ function displayScore() {
 
 function stopGame() {
     document.getElementById('winner').textContent = finalWinner + ' won!';
+    document.getElementById('celebrate').setAttribute("src", "./images/celebrate.gif");
     buttons.forEach(button => {
         button.removeEventListener('click', playGame);
     })
